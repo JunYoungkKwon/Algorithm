@@ -13,4 +13,5 @@ for _ in range(N):
         cnt = cnt % len(ex)
     ans.append(ex[cnt])
     del ex[cnt]
-print(*ans)
+print('<' , end = "")
+print(', '.join(map(str, ans)) + '>')
