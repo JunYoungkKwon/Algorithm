@@ -1,20 +1,22 @@
-from collections import deque
-ans = 0
-N, M = map(int, input().split())
-find = list((map(int, input().split()))) # 1, 2 ,3
-deq = deque([i for i in range(1, N+1)]) # 1 ... 10
+N = int(input())
+stk = []
+true = []
+is_vpf = True
+cnt = 1
+for i in range(N):
+    num = int(input())
+    while cnt <= num:
+        stk.append(cnt)
+        true.append('+')
+        cnt += 1
+    if stk[-1] == num:
+        stk.pop()
+        true.append('-')
+    else:
+        is_vpf = False
 
-
-for i in range(M):
-    while True:
-        if deq[0] == find[i]:
-            deq.popleft()
-            break
-        else:
-            if deq.index(find[i]) >= len(deq) / 2:
-                deq.appendleft(deq.pop())
-                ans += 1
-            else:
-                deq.append(deq.popleft())
-                ans += 1
-print(ans)
+if is_vpf == False:
+    print('NO')
+else:
+    for i in true:
+        print(i)
