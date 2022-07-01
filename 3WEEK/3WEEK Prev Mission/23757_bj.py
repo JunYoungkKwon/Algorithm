@@ -1,15 +1,25 @@
-# import  heapq
-#
-# M, N = map(int, input())
-# li = list(map(int, input().split()))
-# li2 = list(map(int, input().split()))
-# max_hq = []
-#
-# for a in li:
-#     heapq.heappush(max_hq, a)
-#
-# for b in li2:
-#     if heapq.heappop(max_hq) >= b:
+import heapq
+
+M, N = map(int, input().split())
+pre = list(map(int, input().split()))
+present = list(map(int, input().split()))
+max_hq = []
+
+for a in pre:
+    heapq.heappush(max_hq, -a)
+
+ans = 1
+for b in present:
+    max_num = -heapq.heappop(max_hq)
+    if max_num >= b:
+        heapq.heappush(max_hq, -(max_num-b))
+    else:
+        ans = 0
+        break
+
+print(ans)
+
+
 
 
 
