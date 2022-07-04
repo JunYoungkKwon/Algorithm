@@ -1,20 +1,36 @@
-# 조합으로도 풀 수 있지만 bfs+백 트래킹을 연습
+from collections import deque
 import sys
+input = sys.stdin.readline
 
-def bfs(idx, sum):
-    global cnt
-    if idx == N:
-        return
-    sum += li[idx]
+def is_valid_coord(x, y):
+    return 0 <= y < N and 0 <= x < N
 
-    if sum == S:
-        cnt +=1
+def bfs(fx ,fy, cnt):
+    chk[fx][fy] = True
+    q = deque()
+    q.append((fx, fy, cnt))
+    while q:
+        x, y, cnt = q.popleft()
 
-    bfs(idx +1,sum)
-    bfs(idx + 1, sum -li[idx])
+        if x == mx and y == my:
+            return print(cnt)
 
-N, S = map(int, input().split())
-li = list(map(int, input().split()))
+        for k in range(8):
+            nx = x + dx[k]
+            ny = y + dy[k]
+            if is_valid_coord(nx, ny) and not chk[nx][ny]:
+                chk[nx][ny] = True
+                q.append((nx, ny, cnt + 1))
+
+
+dy = (2, -2, 2, -2, 1, -1, 1, -1)
+dx = (1, 1, -1, -1, 2, 2, -2, -2)
+
 cnt = 0
-bfs(0, 0)
-print(cnt)
+for _ in range(int(input())):
+    N = int(input())
+    x, y = map(int, input().split())
+    mx, my = map(int, input().split())
+    adj = [[0] * N for _ in range(N)]
+    chk = [[False] * N for _ in range(N)]
+    bfs(x, y, cnt)
