@@ -1,30 +1,38 @@
-R,C,K = map(int,input().split()) #R,C,K를 받아줌
-board = [input() for _ in range(R)] #board를 받아줌
-board.reverse()
-visited = [[False]*C for _ in range(R)] #방문했는지 하지 않았는지 받아줌
+dy = (0, 1, 0, -1)
+dx = (1, 0, -1, 0)
 
-#좌표 평면에서 이동 가능한 가지 수를 받아줌(동남서북)
-dx = [1,0,-1,0]
-dy = [0,-1,0,1]
+R, C, K = map(int, input().split())
+board = [input() for _ in range(R)]
+chk = [[False] * C for _ in range(R)]
+ans = 0
 
-#유효한 좌표 평면인지 확인해 줌
-def coord(y,x):
-  return 0<=y<R and 0<=x<C
 
-ans = 0 #정답을 받아줌
-def dfs(start_y,start_x,dist):
-  global ans
-  #목표 지점이고, 해당하는 거리가 k일 때, 정답에 추가해줌
-  if start_y == R-1 and start_x == C-1 and dist == K-1 and board[start_y][start_x] == '.':
-    ans += 1
-  else: #해당 Queue에 있는 좌표를 탐색
-    visited[start_y][start_x] = True #방문했다고 처리해줌
-    for i in range(4): #좌표 평면에서 이동 가능한 지점으로 이동해줌
-      ny = start_y + dy[i]
-      nx = start_x + dx[i]
-      if coord(ny,nx) and board[ny][nx] == '.' and not visited[ny][nx]:
-        dfs(ny,nx,dist+1)
-    visited[start_y][start_x] = False #방문 기록을 초기화 시켜줌
+def is_valid_coord(y, x):
+    return 0 <= y < R and 0 <= x < C
 
-dfs(0,0,0) #시작 지점에서 dfs를 시작함
-print(ans) #정답을 출력함
+
+def backtracking(y, x, d):
+    global ans
+    if y == 0 and x == C - 1 and d == K:
+        ans += 1
+        return
+
+    if d < K:
+        nd = d + 1
+        for k in range(4):
+            ny = y + dy[k]
+            nx = x + dx[k]
+            if is_valid_coord(ny, nx) and board[ny][nx] == '.' and not chk[ny][nx]:
+                chk[ny][nx] = True
+                backtracking(ny, nx, nd)
+                chk[ny][nx] = False
+
+
+if board[R - 1][0] == 'T' or board[0][C - 1] == 'T':
+    print(0)
+else:
+    chk[R - 1][0] = True
+    backtracking(R - 1, 0, 1)
+    chk[R - 1][0] = False
+
+    print(ans)
