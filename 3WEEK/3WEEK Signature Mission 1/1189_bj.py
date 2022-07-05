@@ -13,8 +13,12 @@ def dfs(y, x, d):
         ny = y + dy[k]
         if is_valid_coord(ny, nx) and board[ny][nx] == "." and not chk[ny][nx]:
             chk[ny][nx] = True
+            print(chk)
+            print(f'{nx} {ny} {cnt}')
             dfs(ny, nx, d + 1)
             chk[ny][nx] = False
+            print(f'{nx} {ny} {cnt} chk')
+            print(f'{chk} chk')
 
 
 N, M, K = map(int, input().split())
