@@ -1,20 +1,50 @@
-# 조합으로도 풀 수 있지만 bfs+백 트래킹을 연습
-import sys
+from collections import deque
 
-def bfs(idx, sum):
-    global cnt
-    if idx == N:
-        return
-    sum += li[idx]
+N = int(input())
+adj = [list(input()) for _ in range(N)]
+chk = [[False] * N for _ in range(N)]
 
-    if sum == S:
-        cnt +=1
+dx = (1, 0, -1, 0)
+dy = (0, -1, 0, 1)
 
-    bfs(idx +1,sum)
-    bfs(idx + 1, sum -li[idx])
+def is_valid_coord(y, x):
+    return 0 <= x < N and 0 <= y < N
 
-N, S = map(int, input().split())
-li = list(map(int, input().split()))
+def bfs(y, x):
+    q = deque()
+    q.append((y, x))
+    chk[y][x] = True
+    while q:
+        y, x = q.popleft()
+        for k in range(4):
+            ny = y + dy[k]
+            nx = x + dx[k]
+            if is_valid_coord(ny, nx) and not chk[ny][nx] and adj[y][x] == adj[ny][nx]:
+                chk[ny][nx] = True
+                q.append((ny, nx))
+
+
 cnt = 0
-bfs(0, 0)
-print(cnt)
+for i in range(N):
+    for j in range(N):
+        if is_valid_coord(i, j) and not chk[i][j]:
+            chk[i][j] = True
+            bfs(i, j)
+            cnt += 1
+
+for i in range(N):
+    for j in range(N):
+        if adj[i][j] == "R":
+            adj[i][j] = "G"
+
+chk = [[False] * N for _ in range(N)]
+
+cnt2 = 0
+for i in range(N):
+    for j in range(N):
+        if is_valid_coord(i, j) and not chk[i][j]:
+            chk[i][j] = True
+            bfs(i, j)
+            cnt2 += 1
+
+print(cnt, cnt2)
