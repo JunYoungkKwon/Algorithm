@@ -1,4 +1,5 @@
 #3차원만 배열만 만들면 다른 bfs 문제랑 다를 게 없는 문제
+#chk = True 안해주면 메모리 초과 나니깐 한번 더 확인
 from collections import deque
 import sys
 
@@ -24,9 +25,11 @@ def bfs(z, y, x, d):
             nz = z + dz[i]
             if is_valid_coord(nz, ny, nx) and not chk[nz][ny][nx]:
                 if adj[nz][ny][nx] == 'E':
+                    chk[nz][ny][nx] = True
                     print(f'Escaped in {d+1} minute(s).')
                     return
                 if adj[nz][ny][nx] == '.':
+                    chk[nz][ny][nx] = True
                     q.append((nz, ny, nx, d+1))
     print("Trapped!")
 
