@@ -1,18 +1,14 @@
-K = int(input())
-dp = [[0] * 31 for _ in range(31)]
+import sys
+input =sys.stdin.readline
+N = int(input())
+arr = list(map(int, input().split()))
 
-for i in range(1, 31):
-    for j in range(1, 31):
-        if i == j:
-            dp[i][j] = 1
-        elif i == 1:
-            dp[i][j] = j
-        elif i > 1 and i < j:
-            dp[i][j] = dp[i][j-1] + dp[i-1][j-1]
+dp = [0] * N
+dp[0] = arr[0]
 
-for _ in range(K):
-    N, M = map(int,input().split())
-    print(dp[N][M])
-
-
-
+for i in range(1, N):
+    if dp[i-1] > 0:
+        dp[i] = dp[i-1] +arr[i]
+    else:
+        dp[i] = arr[i]
+print(max(dp))
