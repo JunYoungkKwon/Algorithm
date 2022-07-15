@@ -6,5 +6,6 @@ cases[2] = 3
 
 for i in range(4, N+1, 2):
     cases[i] = 2 + cases[i-2] * 3 + sum(cases[:i-2]) * 2
+    print(cases[:i-2])
 
 print(str(cases[N]))
