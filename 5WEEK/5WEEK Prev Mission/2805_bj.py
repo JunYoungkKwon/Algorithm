@@ -21,7 +21,7 @@ def is_possible(h):
     # return sum(tree - h if tree >= h else 0 for tree in trees) >= M
 
 while lo + 1 < hi:  # 적절한 벌목 높이를 찾는 알고리즘
-    # print(f'lo = {lo} mid = {mid}  hi = {hi} ')
+    print(f'lo = {lo} mid = {mid}  hi = {hi} ')
     if is_possible(mid):
         lo = mid
     else:
