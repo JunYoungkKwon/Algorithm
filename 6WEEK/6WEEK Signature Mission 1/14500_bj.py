@@ -1,68 +1,44 @@
-N = int(input())
-board = [list(input()) for _ in range(N)]
-check = [[0] * N for _ in range(N)]
-#red = C, blue = P, green = Z, yellow = Y
-color = [0] * 4
-dy = [1, 0, -1, 0]
-dx = [0, 1, 0, -1]
-x, y = 0, 0
-def is_valid(y, x):
-    return 0 <= y < N and 0 <= x < N
-def color_chk(y, x, ny, nx):
-    if board[y][x] == board[ny][nx]:
-        return False
-    else:
-        return True
-def change_color(y, x, ny, nx):
-    a = board[y][x]
-    board[y][x] = board[ny][nx]
-    board[ny][nx] = a
+N, M = map(int, input().split())
+board = [list(map(int, input().split())) for _ in range(N)]
+ans = 0
 
-def count_color():
-    ans = 1
-    for i in range(N):
-        cnt = 1
-        for j in range(1, N):
-            if board[i][j] == board[i][j - 1]:
-                cnt += 1
-            else:
-                cnt = 1
-            ans = max(ans, cnt)
+def tech(board,i,j,N,M):
+    ans = 0
+    if j+3 < M:
+        ans = max(ans, sum(board[i][j:j+4]))
+    if i+3 < N:
+        number = board[i][j] + board[i+1][j] + board[i+2][j] + board[i+3][j]
+        ans = max(ans, number)
+    if j+1 < M and i+1 < N:
+        number = board[i][j] + board[i+1][j] + board[i][j+1] + board[i+1][j+1]
+        ans = max(ans, number)
+    if j+2 < M and i+1 < N:
+        for k in range(3):
+            number = sum(board[i][j:j + 3]) + board[i + 1][j + k]
+            ans = max(ans, number)
+        for k in range(3):
+            number = sum(board[i + 1][j:j + 3]) + board[i][j + k]
+            ans = max(ans, number)
+    if j+1 < M and i+2 < N:
+        for k in range(3):
+            number = board[i][j] + board[i + 1][j] + board[i + 2][j] + board[i + k][j + 1]
+            ans = max(ans, number)
+        for k in range(3):
+            number = board[i][j+1] + board[i + 1][j + 1] + board[i + 2][j + 1] + board[i + k][j]
+            ans = max(ans, number)
+        for k in range(2):
+            number = board[i + 1][j] + board[i + 1][j + 1] + board[i + 2][j + (1-k)] + board[i][j+k]
+            ans = max(ans, number)
+    if j+2 < M and i+1 < N:
+        number = board[i][j + 1] + board[i + 1][j + 1] + board[i][j] + board[i + 1][j + 2]
+        ans = max(ans, number)
+        number = board[i][j + 1] + board[i + 1][j + 1] + board[i+1][j] + board[i][j + 2]
+        ans = max(ans, number)
 
-        cnt = 1
-        for j in range(1, N):
-            if board[j][i] == board[j - 1][i]:
-                cnt += 1
-            else:
-                cnt = 1
-            ans = max(ans, cnt)
     return ans
 
 
-
-result = 0
-while True:
-    #다 돌았다면 종료
-    if y == N:
-        break
-    for k in range(4):
-        ny = y + dy[k]
-        nx = x + dx[k]
-        if is_valid(ny, nx):
-            # 1.상근이는 사탕의 색이 다른 인접한 두 칸을 고른다.
-            if color_chk(y, x, ny, nx):
-                # 2.그 다음 고른 칸에 들어있는 사탕을 서로 교환한다.
-                change_color(y, x, ny, nx)
-                # 3.모두 같은 색으로 이루어져 있는 가장 긴 연속 부분(행 또는 열)을 고른 다음 그 사탕을 모두 먹는다.
-                # for i in range(N):
-                #     print(*board[i])
-                # print(f'result = {result}, x = {x},y = {y}, nx = {nx}, ny = {ny}')
-                result = max(result, count_color())
-                change_color(y, x, ny, nx)  # 원상복구
-
-    if x < N-1:
-        x = x + 1
-    else:
-        y = y + 1
-        x = 0
-print(result)
+for i in range(N):
+    for j in range(M):
+        ans= max(ans,tech(board,i,j,N,M))
+print(ans)
