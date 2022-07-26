@@ -1,7 +1,6 @@
 #예외처리가 미숙해서 완전 오래걸렸음 ㅠ
 N, L = map(int, input().split())
 board = [list(map(int, input().split())) for _ in range(N)]
-
 #행
 ans = 0
 for i in range(N):
