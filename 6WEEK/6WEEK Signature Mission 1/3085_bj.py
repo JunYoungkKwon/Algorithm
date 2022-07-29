@@ -42,7 +42,6 @@ def count_color():
 
 result = 0
 while True:
-    #다 돌았다면 종료
     if y == N:
         break
     for k in range(4):
@@ -53,7 +52,6 @@ while True:
             if color_chk(y, x, ny, nx):
                 # 2.그 다음 고른 칸에 들어있는 사탕을 서로 교환한다.
                 change_color(y, x, ny, nx)
-                # 3.모두 같은 색으로 이루어져 있는 가장 긴 연속 부분(행 또는 열)을 고른 다음 그 사탕을 모두 먹는다.
                 # for i in range(N):
                 #     print(*board[i])
                 # print(f'result = {result}, x = {x},y = {y}, nx = {nx}, ny = {ny}')
