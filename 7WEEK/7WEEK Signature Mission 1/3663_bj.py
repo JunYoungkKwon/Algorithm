@@ -1,64 +1,49 @@
-import sys
-from collections import deque
-input = sys.stdin.readline
+# def solution(name):
+#     answer = 0
+#     length = len(name)  # name의 길이
+#
+#     for letter in name:
+#         # 각 인덱스의 알파벳을 만들기 위해 필요한 동작 횟수 추가
+#         answer += min(ord(letter) - ord('A'), abs(ord(letter) - ord('Z') - 1))
+#
+#     # A를 제외한 모든 알파벳을 검사하는데 필요한 최소 동작 횟수
+#     # 최댓값은 문자열의 길이이므로 이를 초깃값으로 설정
+#     min_move = length - 1
+#
+#     for i in range(length):
+#         next_i = i + 1  # 현재 알파벳 이후로 처음 만나는 A가 아닌 알파벳의 인덱스
+#         while next_i < length and name[next_i] == 'A':
+#             next_i += 1
+#
+#         # 이동할 수 있는 경우의 수 1. 우측 -> 좌측
+#         # 이동할 수 있는 경우의 수 2. 좌측 -> 우측
+#         min_move = min(min_move, i + (i + length - next_i), 2 * (length - next_i) + i)
+#
+#     answer += min_move
+#     return answer
+#
+#
+# T = int(input())
+# for _ in range(T):
+#     print(solution(input()))
+for _ in range(int(input())):
+    ans = 0
+    move = 0
+    name = input()
+    ln = len(name)
+    min_move = ln - 1
+    for i in range(ln):
+        ans += min(ord(name[i]) - ord('A'), ord('Z') - ord(name[i])  + 1)
+
+    for i in range(ln):
+        next_i = i + 1  # 현재 알파벳 이후로 처음 만나는 A가 아닌 알파벳의 인덱스
+        while next_i < ln and name[next_i] == 'A':
+            next_i += 1
+
+        # 이동할 수 있는 경우의 수 1. 우측 -> 좌측
+        # 이동할 수 있는 경우의 수 2. 좌측 -> 우측
+        min_move = min(min_move, i * 2 + (ln - next_i), 2 * (ln - next_i) + i)
+
+    print(ans+min_move)
 
 
-def bfs(x, y):
-    q = deque([(x, y)])
-    visited[x][y] = 1
-    seaList = []
-
-    while q:
-        x, y = q.popleft()
-        sea = 0
-        for i in range(4):
-            nx = x + dx[i]
-            ny = y + dy[i]
-            if 0 <= nx < n and 0 <= ny < m:
-                if not graph[nx][ny]:
-                    sea += 1
-                elif graph[nx][ny] and not visited[nx][ny]:
-                    q.append((nx, ny))
-                    visited[nx][ny] = 1
-        if sea > 0:
-            seaList.append((x, y, sea))
-    for x, y, sea in seaList:
-        graph[x][y] = max(0, graph[x][y] - sea)
-
-    return 1
-
-
-n, m = map(int, input().split())
-graph = [list(map(int, input().split())) for _ in range(n)]
-
-ice = []
-for i in range(n):
-    for j in range(m):
-        if graph[i][j]:
-            ice.append((i, j))
-
-dx = [-1, 1, 0, 0]
-dy = [0, 0, -1, 1]
-year = 0
-
-while ice:
-    visited = [[0] * m for _ in range(n)]
-    delList = []
-    group = 0
-    for i, j in ice:
-        if graph[i][j] and not visited[i][j]:
-            group += bfs(i, j)
-        if graph[i][j] == 0:
-            delList.append((i, j))
-    for k in range(n):
-        print(*graph[k])
-    print("")
-
-    if group > 1:
-        print(year)
-        break
-    ice = sorted(list(set(ice) - set(delList)))
-    year += 1
-
-if group < 2:
-    print(0)
