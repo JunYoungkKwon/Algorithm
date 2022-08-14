@@ -1,6 +1,5 @@
 n = int(input())
 
-
 line = 0
 end = 0
 while n > end:
