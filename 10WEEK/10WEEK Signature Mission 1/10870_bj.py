@@ -1,12 +1,15 @@
-M, N = map(int, input().split())
+n = int(input())
+s = [0, 1]
+for i in range(2, n + 1):
+    s.append(s[i - 1] + s[i - 2])
+print(s[n])
+# N = int(input())
+# cache = [0]
+# def dp(N):
+#     if N <= 1:
+#         return cache[N]
+#     cache[N] = dp(N-1) + dp(N-2)
+#     return cache[N]
+#
+# print(dp(N))
 
-sosu_li = []
-for i in range(M, N+1):
-    sosu = True
-    if i > 1:
-        for j in range(2, int(i** 0.5)+1):
-            if i % j == 0:
-                sosu = False
-                break
-        if sosu:
-            print(i)
