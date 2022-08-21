@@ -2,6 +2,7 @@ def draw_stars(n):
   if n==1:
     return ['*']
 
+
   Stars=draw_stars(n//3)
   L=[]
 
