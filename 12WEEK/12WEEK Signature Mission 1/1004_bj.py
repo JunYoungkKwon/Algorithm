@@ -1,3 +1,4 @@
+T = int(input())
 for _ in range(T):
     # 출발점 도착점
     x1, y1, x2, y2 = list(map(int, input().split()))
