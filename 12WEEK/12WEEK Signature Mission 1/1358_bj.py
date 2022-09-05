@@ -7,6 +7,7 @@ count = 0
 for _ in range(P):
     x, y = map(int, input().split())
 
+
     # 가운데 직사각형 내부에 있는 경우(둘레 포함)
     if (X <= x <= X + W) and (Y <= y <= Y + H):
         count += 1
