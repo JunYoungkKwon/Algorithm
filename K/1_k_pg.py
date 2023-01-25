@@ -88,7 +88,6 @@ t_dict = defaultdict(int)
 
 
 
-
 def cal_date(p_date, period):
     p_date = p_date.replace(".", " ")
     year, mon, day = p_date.split()
