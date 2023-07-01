@@ -13,4 +13,5 @@ for _ in range(int(input())):
                 ans = 'NO'
     if len(stk) > 0:
         ans = 'NO'
+
     print(ans)
