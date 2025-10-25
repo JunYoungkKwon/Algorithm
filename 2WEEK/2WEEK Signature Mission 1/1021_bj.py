@@ -5,6 +5,7 @@ find = list((map(int, input().split()))) # 1, 2 ,3
 deq = deque([i for i in range(1, N+1)]) # 1 ... 10
 
 
+
 for i in range(M):
     while True:
         if deq[0] == find[i]:

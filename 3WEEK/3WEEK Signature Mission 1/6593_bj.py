@@ -1,3 +1,4 @@
+
 #3차원만 배열만 만들면 다른 bfs 문제랑 다를 게 없는 문제
 #chk = True 안해주면 메모리 초과 나니깐 한번 더 확인
 from collections import deque

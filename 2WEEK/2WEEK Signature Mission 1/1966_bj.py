@@ -20,3 +20,4 @@ for _ in range (int(input())):
             deq.append(first)
             if M < 0:
                 M = len(deq)-1
+

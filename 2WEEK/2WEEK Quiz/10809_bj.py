@@ -1,6 +1,7 @@
-#FAIL
-a = input()
-alpha ='abcdefghijklmnopqrstuvwxyz'
-for i in alpha:
-    print(a.find(i), end= " ")
-
+S = input()
+dic ="abcdefghijklmnopqrstuvwxyz"
+for d in dic:
+    if d in S:
+        print(S.find(d), end=" ")
+    else:
+        print(-1, end=" ")

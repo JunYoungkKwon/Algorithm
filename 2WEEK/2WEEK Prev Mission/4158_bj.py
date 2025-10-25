@@ -14,3 +14,4 @@ while True:
         s2.add(int(input()))
     s3 = s1.intersection(s2)
     print(len(s3))
+

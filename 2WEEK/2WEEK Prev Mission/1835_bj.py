@@ -9,3 +9,4 @@ for i in range(N,0, -1):
 print(*list(deq))
 
 
+3 4 4 3 3 4

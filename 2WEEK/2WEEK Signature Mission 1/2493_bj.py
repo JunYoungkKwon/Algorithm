@@ -7,6 +7,7 @@ answer = []
 stk = []
 for i in range(n):
     h = t_list[i]
+
     if stk:
         while stk:
             if stk[-1][0] < h :

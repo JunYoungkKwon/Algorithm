@@ -16,6 +16,7 @@ while deq:
         deq.rotate(-re)
         move.rotate(-re)
 
+
     remove.append(deq.popleft())
     re = move.popleft()
 

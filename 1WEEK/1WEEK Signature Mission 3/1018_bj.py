@@ -5,6 +5,8 @@ mini = []
 for _ in range(N):
     li.append(input())
 
+print(li)
+
 for i in range (N-7):
     for j in range (M-7):
         c1 = 0

@@ -8,7 +8,7 @@ for i in range(len(li)):
     if li[i] == '(':
         stk.append('(')
 
-    else:
+    else: # ')'
         if li[i-1] == '(':
             stk.pop()
             ans += len(stk)
