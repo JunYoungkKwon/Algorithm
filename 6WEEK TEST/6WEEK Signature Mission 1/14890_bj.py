@@ -8,22 +8,60 @@
 # 낮은 지점의 칸의 높이가 모두 같지 않거나, L개가 연속되지 않은 경우
 # 경사로를 놓다가 범위를 벗어나는 경우
 
-N, L = map(int, input().split())
-board = [list(map(int, input().split())) for _ in range(N)]
-chk = [[0]*N for _ in range(N)]
+import sys
+input = sys.stdin.readline
 
-def is_valid(y, x):
-    return 0 <= y < N and 0 <= x < N
+def can_pass(line, L):
+    N = len(line)
+    used = [False] * N  # 경사로가 이미 놓인 칸 표시
+    for i in range(N-1):
+        cur = line[i]
+        nxt = line[i+1]
+        if cur == nxt:
+            continue
+        elif cur - nxt == 1:
+            # 내려막길: i+1 부터 L칸이 nxt와 같고 비어있어야 함
+            for j in range(i+1, i+1+L):
+                if j < 0 or j >= N:  # 범위 벗어나면 실패
+                    return False
+                if line[j] != nxt or used[j]:
+                    return False
+            for j in range(i+1, i+1+L):
+                used[j] = True
+        elif nxt - cur == 1:
+            # 오르막길: i부터 뒤로 L칸이 cur와 같고 비어있어야 함
+            for j in range(i, i-L, -1):  # i, i-1, ..., i-L+1
+                if j < 0 or j >= N:
+                    return False
+                if line[j] != cur or used[j]:
+                    return False
+            for j in range(i, i-L, -1):
+                used[j] = True
+        else:
+            # 높이차 2 이상이면 불가
+            return False
+    return True
 
-ans = 0
-for i in range(N):
-    same = 0
-    pre_num = 0
-    for j in range(N):
-        now_num = board[i][j]
-        if abs(pre_num-now_num) == 1:
-            if pre_num < now_num :
+def main():
+    N, L = map(int, input().split())
+    A = [list(map(int, input().split())) for _ in range(N)]
 
-            if pre_num > now_num:
+    ans = 0
+    # 각 행 검사
+    for r in range(N):
+        if can_pass(A[r], L):
+            ans += 1
+
+    # 각 열 검사 (열을 1차원 리스트로 만들어서 검사)
+    for c in range(N):
+        col = [A[r][c] for r in range(N)]
+        if can_pass(col, L):
+            ans += 1
+
+    print(ans)
+
+if __name__ == "__main__":
+    main()
+
 
 
