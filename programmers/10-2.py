@@ -1,3 +1,2 @@
-new = "abcdefghijklmn.pabcdefghijklmn.p"
-
-print(new[::2])
+s = "..abc.."
+print(s.strip('.'))
