@@ -1,2 +1,4 @@
-s = "..abc.."
-print(s.strip('.'))
+from collections import defaultdict
+
+d = defaultdict(int)
+d['A'].append(1) 
