@@ -157,10 +157,91 @@ def solution(arr, query):
             ans = ans[id:]
 
     return ans
+# [코드 처리하기]
+def solution(code):
+    answer = ''
+    mode = 0
+    for idx, n in enumerate(code):
+        if n == "1":
+            mode = 1 - mode
+            continue
+        if mode == 0 and n != "1" and idx%2 == 0:
+            answer += n
+        if mode == 1 and n != "1" and idx%2 != 0:
+            answer += n
+    return answer if answer else "EMPTY"
+# [등차수열의 특정한 항만 더하기]
+def solution(a, d, included):
+    answer = 0
+    for i, tf in enumerate(included):
+        if tf:
+            answer += a+(d*i)
+    return answer
+# [이어 붙인 수]
+def solution(num_list):
+    answer = 0
+    holsu = ""
+    jjacksu = ""
+    for i in num_list:
+        if i % 2 == 0:
+            jjacksu += str(i)
+        else:
+            holsu += str(i)
+    return int(jjacksu) + int(holsu)
+# [마지막 두 원소]
+def solution(num_list):
+    if num_list[-1] > num_list[-2]:
+        num_list.append(num_list[-1] - num_list[-2])
 
+    elif num_list[-1] <= num_list[-2]:
+        num_list.append(num_list[-1] * 2)
 
+    return num_list
+# [수 조작하기 1]
+def solution(n, control):
+    answer = n
+    for wasd in control:
+        if wasd == "w":
+            answer += 1
+        elif wasd == "s":
+            answer -= 1
+        elif wasd == "d":
+            answer += 10
+        else:
+            answer -= 10
+    return answer
+# [수 조작하기 2]
+def solution(numLog):
+    now = 0
+    answer = ''
+    for i in range(len(numLog)-1):
+        if numLog[i+1] - numLog[i] == 1:
+            answer += "w"
+        elif numLog[i+1] - numLog[i] == 10:
+            answer += "d"
+        elif numLog[i+1] - numLog[i] == -1:
+            answer += "s"
+        else:
+            answer += "a"
+    return answer
+# [수열과 구간 쿼리 3]
+def solution(arr, queries):
+    answer = []
+    for i, j in queries:
+        arr[i], arr[j] = arr[j], arr[i]
 
-
+    return arr
+# [수열과 구간 쿼리 2]
+def solution(arr, queries):
+    result = []
+    for s, e, k in queries:
+        # s부터 e까지 범위 정렬하지 않고 필터
+        candidates = [num for num in arr[s:e+1] if num > k]
+        if candidates:
+            result.append(min(candidates))
+        else:
+            result.append(-1)
+    return result
 
 
 
