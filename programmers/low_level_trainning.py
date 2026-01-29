@@ -242,6 +242,154 @@ def solution(arr, queries):
         else:
             result.append(-1)
     return result
+# [카운트 업]
+def solution(start_num, end_num):
+    return [i for i in range(start_num, end_num+1)]
+# [n 번째 원소부터]
+def solution(num_list, n):
+    return num_list[n-1:]
+# [주사위 게임 2]
+def solution(a, b, c):
+    nums = [a, b, c]
+    unique = len(set(nums))
+
+    s1 = a + b + c
+    s2 = a * a + b * b + c * c
+    s3 = a * a * a + b * b * b + c * c * c
+
+    if unique == 3:  # 모두 다름
+        return s1
+    elif unique == 2:  # 두 개만 같음
+        return s1 * s2
+    else:  # 모두 같음
+        return s1 * s2 * s3
+# [정수 부분]
+def solution(flo):
+    return int(flo)
+# [문자열 바꿔서 찾기]
+def solution(myString, pat):
+    ans = ""
+    for i in myString:
+        if i == "A":
+            ans += "B"
+        else:
+            ans += "A"
+    return 1 if pat in  ans else 0
+# [정수 찾기]
+def solution(num_list, n):
+    return 1 if n in num_list else 0
+# [배열의 원소 삭제하기]
+def solution(arr, delete_list):
+    delete_set = set(delete_list)
+    return [x for x in arr if x not in delete_list]
+# [꼬리 문자열]
+def solution(str_list, ex):
+    ans = [a for a in str_list if ex not in a]
+    return "".join(ans)
+# [0 떼기]
+def solution(n_str):
+    return n_str.lstrip("0")
+# [부분 문자열]
+def solution(str1, str2):
+    return 1 if str1 in str2 else 0
+# [부분 문자열인지 확인하기]
+def solution(my_string, target):
+    return 1 if target in my_string else 0
+# [문자열로 변환]
+def solution(n):
+    return str(n)
+# [뒤에서 5등 위로]
+def solution(num_list):
+    num_list.sort()
+    return num_list[5:]
+# [문자열 정수의 합]
+def solution(num_str):
+    answer = 0
+    for i in num_str:
+        answer += int(i)
+    return answer
+# [문자열을 정수로 변환]
+def solution(n_str):
+    return int(n_str)
+# [뒤에서 5등까지]
+def solution(num_list):
+    num_list.sort()
+    return num_list[:5]
+# [배열의 길이에 따라 다른 연산하기]
+def solution(arr, n):
+    answer = []
+    if len(arr) % 2 == 0:
+        for i, num in enumerate(arr):
+            if i % 2 != 0:
+                answer.append(num + n)
+            else:
+                answer.append(num)
+    else:
+        for i, num in enumerate(arr):
+            if i % 2 == 0:
+                answer.append(num + n)
+            else:
+                answer.append(num)
+
+    return answer
+# [배열 비교하기]
+def solution(arr1, arr2):
+    answer = 0
+    if len(arr1) != len(arr2):
+        return 1 if len(arr1) > len(arr2) else -1
+    else:
+        if sum(arr1) > sum(arr2):
+            return 1
+        elif sum(arr1) < sum(arr2):
+            return -1
+        else:
+            return 0
+# [주사위 게임 1]
+def solution(a, b):
+    a_ck = (0 if a % 2 == 0 else 1)
+    b_ck = (0 if b % 2 == 0 else 1)
+
+    if a_ck + b_ck == 2:
+        return a ** 2 + b ** 2
+    elif a_ck + b_ck == 1:
+        return 2 * (a + b)
+    else:
+        return abs(a - b)
+# [ad 제거하기]
+def solution(strArr):
+    answer = []
+    for a in strArr:
+        if "ad" not in a:
+            answer.append(a)
+    return answer
+# [배열의 원소만큼 추가하기]
+def solution(arr):
+    answer = []
+    for i in arr:
+        for a in range(i):
+            answer.append(i)
+    return answer
+# [x 사이의 개수]
+def solution(myString):
+    return [len(s) for s in myString.split('x')]
+# [홀수 vs 쩍수]
+def solution(num_list):
+    odd_sum = sum(num_list[0::2])   # 1,3,5,...
+    even_sum = sum(num_list[1::2])  # 2,4,6,...
+    return max(odd_sum, even_sum)
+# [공백으로 구분하기 2]
+def solution(my_string):
+    return my_string.split()
+# [rny_string]
+def solution(rny_string):
+    return rny_string.replace("m", "rn")
+# [공백으로 구분하기 1]
+def solution(my_string):
+    return my_string.split()
+# [배열에서 문자열 대소문자 변환하기]
+def solution(strArr):
+    return [a.lower() if i % 2 == 0 else a.upper() for i, a in enumerate(strArr) ]
+
 
 
 
