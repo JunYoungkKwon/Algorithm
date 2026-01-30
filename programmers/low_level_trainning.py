@@ -389,7 +389,206 @@ def solution(my_string):
 # [배열에서 문자열 대소문자 변환하기]
 def solution(strArr):
     return [a.lower() if i % 2 == 0 else a.upper() for i, a in enumerate(strArr) ]
+# [수열과 구간 쿼리 4]
+def solution(arr, queries):
+    for s, e, k in queries:
+        for i in range(s, e+1):
+            if i%k == 0:
+                arr[i] += 1
+    return arr
+# [배열 만들기 2]
+def solution(l, r):
+    answer = []
+    for i in range(l, r+1):
+        if all(k in "05" for k in str(i)):
+            answer.append(i)
+    return answer if answer else [-1]
+# [대문자로 바꾸기]
+def solution(myString):
+    return myString.upper()
+# [배열 만들기 4]
+def solution(arr):
+    stk = []
+    i = 0
+    while i < len(arr):
+        if not stk:
+            stk.append(arr[i])
+            i += 1
+        else:
+            if stk[-1] < arr[i]:
+                stk.append(arr[i])
+                i += 1
+            else:
+                stk.pop()
+    return stk
+# [간단한 논리 연산]
+def solution(x1, x2, x3, x4):
+    return (x1 or x2) and (x3 or x4)
+# [주사위 게임 3]
+def solution(a, b, c, d):
+    nums = [a, b, c, d]
+    nums.sort()
+    if nums[0] == nums[3]:
+        return 1111 * nums[0]
+    if nums[0] == nums[2] or nums[1] == nums[3]:
+        if nums[0] == nums[2]:
+            p, q = nums[0], nums[3]
+        else:
+            p, q = nums[1], nums[0]
+        return (10 * p + q) ** 2
+    if nums[0] == nums[1] and nums[2] == nums[3]:
+        return (nums[0] + nums[2]) * abs(nums[0] - nums[2])
 
+    if nums[0] == nums[1]:
+        return nums[2] * nums[3]
+    if nums[1] == nums[2]:
+        return nums[0] * nums[3]
+    if nums[2] == nums[3]:
+        return nums[0] * nums[1]
+    return nums[0]
+# [9로 나눈 나머지]
+def solution(number):
+    return int(number) % 9
+# [문자열 여러 번 뒤집기]
+def solution(my_string, queries):
+    for s, e in queries:
+        my_string = (
+            my_string[:s] +
+            my_string[s:e+1][::-1] +
+            my_string[e+1:]
+        )
+    return my_string
+# [간단한 식 계산하기]
+def solution(binomial):
+    a, op, b = binomial.split()
+    print(binomial.split())
+    a, b = int(a), int(b)
+
+    if op == '+':
+        return a + b
+    elif op == '-':
+        return a - b
+    else:  # '*'
+        return a * b
+# [소문자로 바꾸기]
+def solution(myString):
+    return myString.lower()
+# [가까운 1 찾기]
+def solution(arr, idx):
+    for i in range(idx, len(arr)):
+        if arr[i] == 1:
+            return i
+    return -1
+# [원하는 문자열 찾기]
+def solution(myString, pat):
+    return 1 if pat.lower() in myString.lower() else 0
+# [배열 만들기 3]
+def solution(arr, intervals):
+    answer = []
+    for s, e in intervals:
+        for i in arr[s:e+1]:
+            answer.append(i)
+    return answer
+# [길이에 따른 연산]
+def solution(num_list):
+    answer = 1
+    if len(num_list) >= 11:
+        return sum(num_list)
+    else:
+        for i in num_list:
+            answer *= i
+        return answer
+# [조건에 맞게 수열 변환하기 1]
+def solution(arr):
+    answer = []
+    for i in arr:
+        if i >= 50 and i % 2 == 0:
+            answer.append(i // 2)
+
+        elif i < 50 and i % 2 != 0:
+            answer.append(i * 2)
+        else:
+            answer.append(i)
+    return answer
+# [할 일 목록]
+def solution(todo_list, finished):
+    return [todo_list[a] for a, i in enumerate(finished) if not i]
+# [n보다 커질 때까지 더하기]
+def solution(numbers, n):
+    answer = 0
+    for i in numbers:
+        if answer > n:
+            return answer
+        answer += i
+    return answer
+# [순서 바꾸기]
+def solution(num_list, n):
+    return num_list[n:] + num_list[:n]
+# [A 강조하기]
+def solution(myString):
+    return myString.lower().replace("a", "A")
+# [5명씩]
+def solution(names):
+    answer = []
+    for i in range(0,len(names),5):
+        answer.append(names[i])
+    return answer
+# [배열 만들기 1]
+def solution(n, k):
+    return [i for i in range(1, n+1) if i % k == 0]
+# [부분 문자열 이어 붙여 문자열 만들기]
+def solution(my_strings, parts):
+    answer = ''
+    i = 0
+    for s, e in parts:
+        a = my_strings[i]
+        answer += a[s:e + 1]
+        i += 1
+    return answer
+# [카운트 다운]
+def solution(start_num, end_num):
+    return [i for i in range(start_num, end_num-1, -1)]
+# [접미사 배열]
+def solution(my_string):
+    answer = []
+    for i in range(len(my_string), -1, -1):
+        if my_string[i:len(my_string)]:
+            answer.append(my_string[i:len(my_string)])
+    answer.sort()
+    return answer
+# [특별한 이차원 배열2]
+def solution(arr):
+    for i in range(len(arr)):
+        for j in range(len(arr[0])):
+            if arr[i][j] != arr[j][i]:
+                return 0
+    return 1
+# [특별한 이차원 배열1]
+def solution(n):
+    answer = [[0]*n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            if i == j:
+                answer[i][j] = 1
+    return answer
+# [문자열 잘라서 정렬하기]
+def solution(myString):
+    return sorted(s for s in myString.split('x') if s)
+# [첫 번째로 나오는 음수]
+def solution(num_list):
+    for i, n in enumerate(num_list):
+        if n < 0:
+            return i
+    return -1
+# [이차원 배열 대각선 순회하기]
+def solution(board, k):
+    answer = 0
+    for i in range(len(board)):
+        for j in range(len(board[0])):
+            if i + j <= k:
+                answer += board[i][j]
+
+    return answer
 
 
 
