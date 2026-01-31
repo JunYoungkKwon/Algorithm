@@ -589,6 +589,266 @@ def solution(board, k):
                 answer += board[i][j]
 
     return answer
+# [배열 만들기 5]
+def solution(intStrs, k, s, l):
+    answer = []
+    for i in intStrs:
+        if int(i[s:s+l]) > k:
+            answer.append(int(i[s:s+l]))
+    return answer
+# [날짜 비교하기]
+def solution(date1, date2):
+    return 1 if date1 < date2 else 0
+# [글자 지우기]
+def solution(my_string, indices):
+    # remove = set(indices)
+    return ''.join(
+        ch for i, ch in enumerate(my_string)
+        if i not in indices
+    )
+# [세로 읽기]
+def solution(my_string, m, c):
+    return "".join(my_string[i] for i in range(c-1, len(my_string), m))
+
+# [빈 배열에 추가, 삭제하기]
+def solution(arr, flag):
+    X = []
+
+    for a, f in zip(arr, flag):
+        if f:
+            X.extend([a] * (a * 2))
+        else:
+            for _ in range(a):
+                X.pop()
+    return X
+# [수열과 구간 쿼리 1]
+def solution(arr, queries):
+    for s, e in queries:
+        for i in range(s, e+1):
+            arr[i] += 1
+    return arr
+# [1로 만들기]
+def solution(num_list):
+    answer = 0
+    for i in num_list:
+        cnt = 0
+        while i > 1:
+            if i % 2 == 0:
+                i = i // 2
+            else:
+                i = (i - 1) // 2
+            cnt += 1
+        answer += cnt
+    return answer
+# [문자열 뒤집기]
+def solution(my_string, s, e):
+    return my_string[:s] + my_string[s:e+1][::-1] + my_string[e+1:]
+# [특정 문자열로 끝나는 가장 긴 부분 문자열 찾기]
+def solution(myString, pat):
+    idx = myString.rfind(pat)
+    return myString[:idx + len(pat)]
+# [문자열이 몇 번 등장하는지 세기]
+def solution(myString, pat):
+    answer = 0
+    for i in range(len(myString)):
+        if myString[i:].startswith(pat):
+            answer+=1
+    return answer
+# [배열의 길이를 2의 거듭제곱으로 만들기]
+def solution(arr):
+    for i in range(0, 11):
+        if len(arr) == 2**i:
+            return arr
+        elif len(arr) < 2**i:
+            arr.extend([0]*(2**i - len(arr)))
+            return arr
+# [문자열 묶기]
+from collections import defaultdict
+def solution(strArr):
+    answer = 0
+    dic = defaultdict(int)
+    for i in strArr:
+        dic[len(i)] +=1
+    return max(dic.values())
+# [세 개의 구분자]
+def solution(myStr):
+    for ch in "abc":
+        myStr = myStr.replace(ch, " ")
+
+    result = myStr.split()
+    return result if result else ["EMPTY"]
+# [qr code]
+def solution(q, r, code):
+    answer = ''
+    for i, n in enumerate(code):
+        if i % q == r:
+            answer += n
+    return answer
+# [리스트 자르기]
+def solution(n, slicer, num_list):
+    if n == 1:
+        return num_list[:slicer[1]+1]
+    elif n == 2:
+        return num_list[slicer[0]:]
+    elif n == 3:
+        return num_list[slicer[0]:slicer[1]+1]
+    else:
+        return num_list[slicer[0]:slicer[1]+1:slicer[2]]
+
+ # [2의 영역]
+def solution(arr):
+    if 2 not in arr:
+        return [-1]
+    start = arr.index(2)     # 첫 번째 2
+    end = len(arr) - 1 - arr[::-1].index(2)# 마지막 2
+    return arr[start:end+1]
+# [조건에 맞게 수열 변환하기 2]
+def solution(arr):
+    count = 0
+    while True:
+        new_arr = []
+        for x in arr:
+            if x >= 50 and x % 2 == 0:
+                new_arr.append(x // 2)
+            elif x < 50 and x % 2 == 1:
+                new_arr.append(x * 2 + 1)
+            else:
+                new_arr.append(x)
+        if new_arr == arr:
+            return count
+        arr = new_arr
+        count += 1
+# [커피 심부름]
+def solution(order):
+    answer = 0
+    for i in order:
+        if "latte" in i:
+            answer += 5000
+        else:
+            answer += 4500
+    return answer
+# [왼쪽 오른쪽]
+def solution(str_list):
+    answer = []
+    for i, n in enumerate(str_list):
+        if n == "l":
+            return str_list[:i]
+        elif n == "r":
+            return str_list[i+1:]
+    return answer
+# [배열 만들기6]
+def solution(arr):
+    stk = []
+    i = 0
+    while i < len(arr):
+        if not stk:
+            stk.append(arr[i])
+            i += 1
+        else:
+            if stk[-1] == arr[i]:
+                stk.pop()
+                i +=1
+            else:
+                stk.append(arr[i])
+                i += 1
+    return stk if stk else [-1]
+
+
+from collections import defaultdict
+# [문자 개수 세기]
+def solution(my_string):
+    dic = defaultdict()
+    for i in range(ord('A'), ord('Z') + 1):
+        dic[i] = 0
+    for i in range(ord('a'), ord('z') + 1):
+        dic[i] = 0
+    for i in my_string:
+        dic[ord(i)] += 1
+    return list(dic.values())
+# [두 수의 합]
+def solution(a, b):
+    return str(int(a) + int(b))
+# [무작위로 K개의 수 뽑기]
+def solution(arr, k):
+    answer = []
+    seen = set()
+    for x in arr:
+        if x not in seen:
+            answer.append(x)
+            seen.add(x)
+        if len(answer) == k:
+            break
+    if len(answer) < k:
+        answer.extend([-1] * (k - len(answer)))
+    return answer
+# [그림 확대]
+def solution(picture, k):
+    answer = []
+    for line in picture:
+        st = ""
+        for n in line:
+            st += (n*k)
+        for i in range(k):
+            answer.append(st)
+    return answer
+# [정사각형으로 만들기]
+def solution(arr):
+    rows = len(arr)
+    cols = len(arr[0])
+    size = max(rows, cols)
+    for i in range(rows):
+        if len(arr[i]) < size:
+            arr[i].extend([0] * (size - len(arr[i])))
+    for _ in range(size - rows):
+        arr.append([0] * size)
+    return arr
+# [전국 대회 선발 고사]
+def solution(rank, attendance):
+    candidates = [(r, i) for i, (r, tf) in enumerate(zip(rank, attendance)) if tf]
+    candidates.sort()
+    top3 = [i for r, i in candidates[:3]]
+    return 10000*top3[0] + 100*top3[1] + top3[2]
+# [문자열 여러 번 뒤집기]
+def solution(my_string, queries):
+    for s, e in queries:
+        my_string = my_string[:s] + my_string[s:e+1][::-1] + my_string[e+1:]
+    return my_string
+# [정수를 나선형으로 배치하기]
+def solution(n):
+    arr = [[0]*n for _ in range(n)]
+    num = 1
+    top, bottom = 0, n-1
+    left, right = 0, n-1
+
+    while num <= n*n:
+        # 상단: 왼쪽 → 오른쪽
+        for i in range(left, right+1):
+            arr[top][i] = num
+            num += 1
+        top += 1
+
+        # 우측: 위 → 아래
+        for i in range(top, bottom+1):
+            arr[i][right] = num
+            num += 1
+        right -= 1
+
+        # 하단: 오른쪽 → 왼쪽
+        for i in range(right, left-1, -1):
+            arr[bottom][i] = num
+            num += 1
+        bottom -= 1
+
+        # 좌측: 아래 → 위
+        for i in range(bottom, top-1, -1):
+            arr[i][left] = num
+            num += 1
+        left += 1
+
+    return arr
+
+
+
 
 
 
