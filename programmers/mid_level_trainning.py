@@ -409,19 +409,185 @@ def solution(numbers):
 def solution(sides):
     a, b = sorted(sides)
     return (a + b - 1) - (b - a)
+# [구슬을 나누는 경우의 수]
+import math
+def solution(balls, share):
+    return math.comb(balls, share)
+# [캐릭터의 좌표]
+def solution(keyinput, board):
+    answer = []
+    max_y = board[1] // 2
+    max_x = board[0] // 2
+    print(max_x, max_y)
+    now_x = 0
+    now_y = 0
+    def is_valid(x, y):
+        return -(max_x) <= x <= max_x and -(max_y) <= y <= max_y
+    for i in keyinput:
+        if i == "up":
+            if is_valid(now_x, now_y + 1):
+                now_y += 1
+        elif i == "down":
+            if is_valid(now_x, now_y - 1):
+                now_y -= 1
+        elif i == "right":
+            if is_valid(now_x + 1, now_y):
+                now_x += 1
+        else:
+            if is_valid(now_x - 1, now_y):
+                now_x -= 1
+    return [now_x, now_y]
+# [종이 자르기]
+def solution(M, N):
+    return M * N - 1
+# [외계어 사전]
+def solution(spell, dic):
+    for word in dic:
+        cnt = 0
+        for sp in spell:
+            if sp in word:
+                cnt += 1
+        if cnt == len(spell):
+            return 1
+    return 2
+# [로그인 성공?]
+from collections import defaultdict
+def solution(id_pw, db):
+    dic = defaultdict(int)
+    for id, pw in db:
+        dic[id] = pw
+    if dic[id_pw[0]] == id_pw[1]:
+        return "login"
+    elif dic[id_pw[0]]:
+        return "wrong pw"
+    else:
+        return "fail"
+# [직사각형 넓이 구하기]
+def solution(dots):
+    xs = [x for x, y in dots]
+    ys = [y for x, y in dots]
 
+    return (max(xs) - min(xs)) * (max(ys) - min(ys))
+# [치킨 쿠폰]
+def solution(chicken):
+    answer = 0
+    coupon = chicken
 
+    while coupon >= 10:
+        service_chicken = coupon // 10
+        answer += service_chicken
+        coupon = coupon % 10 + service_chicken
+    return answer
+# [등수 매기기]
+def solution(score):
+    avg = [(e + m) / 2 for e, m in score]
+    sorted_avg = sorted(avg, reverse=True)
+    return [sorted_avg.index(i) + 1 for i in avg]
+# [저주의 숫자 3]
+def solution(n):
+    answer = 1
+    for i in range(n - 1):
+        answer += 1
+        while True:
+            if answer % 3 == 0 or "3" in str(answer):
+                answer += 1
+            else:
+                break
+    return answer
+# [문자열 밀기]
+from collections import deque
+def solution(A, B):
+    answer = 0
+    if A == B:
+        return answer
+    deqA = deque(A)
+    for i in range(len(B)):
+        deqA.rotate(1)
+        answer += 1
+        a = "".join(list(deqA))
+        if a == B:
+            return answer
+    return -1
+# [특이한 정렬]
+def solution(numlist, n):
+    distance = [abs(n-num) for num in numlist]
+    a = sorted(list(zip(distance, numlist)), key = lambda x:(x[0], -x[1]))
+    return [y for x, y in a]
+# [다항식 더하기]
+def solution(polynomial):
+    x_sum = 0
+    num_sum = 0
+    for term in polynomial.split(" + "):
+        if 'x' in term:
+            if term == 'x':
+                x_sum += 1
+            else:
+                x_sum += int(term.replace('x', ''))
+        else:
+            num_sum += int(term)
+    if x_sum == 0:
+        return str(num_sum)
+    if num_sum == 0:
+        return 'x' if x_sum == 1 else f'{x_sum}x'
+    x_part = 'x' if x_sum == 1 else f'{x_sum}x'
+    return f'{x_part} + {num_sum}'
+# [OX퀴즈]
+def solution(quiz):
+    answer = []
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    for qu in quiz:
+        qu = qu.split()
+        if qu[1] == "+":
+            if int(qu[0]) + int(qu[2]) == int(qu[4]):
+                answer.append("O")
+            else:
+                answer.append("X")
+        else:
+            if int(qu[0]) - int(qu[2]) == int(qu[4]):
+                answer.append("O")
+            else:
+                answer.append("X")
+    return answer
+# [다음에 올 숫자]
+def solution(common):
+    if common[1] - common[0] == common[2] - common[1]:
+        return common[-1] + (common[1] - common[0])
+    else:
+        return common[-1] * (common[1] // common[0])
+# [연속된 수의 합]
+def solution(num, total):
+    start = (total - (num * (num - 1)) // 2) // num
+    return [start + i for i in range(num)]
+# [안전지대]
+def solution(board):
+    answer = 0
+    n = len(board)
+    bumb_list = []
+    def bumb(y, x, n, board):
+        dy = [-1, 1, 0, 0, -1, 1, 1, -1]
+        dx = [0, 0, -1, 1, 1, 1, -1, -1]
+        for i in range(8):
+            ny, nx = dy[i] + y, dx[i] + x
+            if 0 <= ny < n and 0 <= nx < n:
+                board[ny][nx] = 1
+    for i in range(n):
+        for j in range(n):
+            if board[i][j] == 1:
+                bumb_list.append([i, j])
+    for i, j in bumb_list:
+        bumb(i, j, n, board)
+    for i in board:
+        answer += i.count(0)
+    return answer
+# [겹치는 선분의 길이]
+from collections import defaultdict
+def solution(lines):
+    dic = defaultdict(int)
+    answer = 0
+    for i, j in lines:
+        for a in range(i, j):
+            dic[a] += 1
+    for k, v in dic.items():
+        if v >= 2:
+            answer += 1
+    return answer
