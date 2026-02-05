@@ -116,3 +116,117 @@ def solution(price, money, count):
 # [문자열 다루기 기본]
 def solution(s):
     return (len(s) == 4 or len(s) == 6) and s.isdigit()
+# [행렬의 덧셈]
+def solution(arr1, arr2):
+    answer = []
+    for a,b in zip(arr1, arr2):
+        k = []
+        for i in range(len(arr1[0])):
+            k.append(a[i]+b[i])
+        answer.append(k)
+    return answer
+# [직사각형 별찍기]
+a, b = map(int, input().strip().split(' '))
+for i in range(b):
+    print("*"*a)
+# [최대공약수와 최소공배수]
+import math
+def solution(n, m):
+    gcd = math.gcd(n ,m)
+    return [gcd, (n * m) // gcd]
+# [크기가 작은 부분문자열]
+def solution(t, p):
+    ans = 0
+    for i in range(len(t)):
+        if int(t[i:(i+len(p))]) <= int(p) and len(t[i:(i+len(p))]) == len(p):
+            ans += 1
+    return ans
+# [예산]
+def solution(d, budget):
+    ans = 0
+    total = 0
+    d = sorted(d)
+    for i in d:
+        if total + i <= budget:
+            total += i
+            ans+= 1
+        else:
+            return ans
+    return ans
+# [3진법 뒤집기]
+def solution(n):
+    a = ""
+    while n >0:
+        a += str(n % 3)
+        n //= 3
+    return int(a, 3)
+# [삼총사]
+from itertools import combinations
+def solution(number):
+    answer = 0
+    for i in combinations(number, 3):
+        if sum(i) == 0:
+            answer += 1
+    return answer
+# [이상한 문자 만들기]
+def solution(s):
+    s = s.split(" ")
+    ans = []
+    for i in s:
+        text = ""
+        for n, eng in enumerate(i):
+            if n % 2 == 0:
+                text += eng.upper()
+            else:
+                text += eng.lower()
+        ans.append(text)
+
+    return " ".join(ans)
+# [가장 가까운 같은 글자]
+def solution(s):
+    answer = []
+    last_pos = {}
+    for i, char in enumerate(s):
+        if char not in last_pos:
+            answer.append(-1)
+        else:
+            answer.append(i - last_pos[char])
+        last_pos[char] = i
+    return answer
+# [시저 암호]
+def solution(s, n):
+    answer = ''
+    for i in s:
+        if i == " ":
+            answer += " "
+            continue
+        base = ord("A") if i.isupper() else ord("a")
+        shift = (ord(i) - base + n) % 26 + base
+        answer += chr(shift)
+    return answer
+# [두 개 뽑아서 더하기]
+from itertools import combinations
+def solution(numbers):
+    s= set()
+    for i in combinations(numbers, 2):
+        s.add(sum(i))
+    return sorted(list(s))
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
