@@ -211,6 +211,118 @@ def solution(numbers):
     for i in combinations(numbers, 2):
         s.add(sum(i))
     return sorted(list(s))
+# [숫자 문자열과 영단어]
+def solution(s):
+    dic = {"zero": "0", "one": "1", "two": "2", "three": "3", "four": "4","five": "5", "six": "6", "seven": "7", "eight": "8", "nine": "9"}
+    for k, v in dic.items():
+        s = s.replace(k, v)
+    return int(s)
+# [콜라 문제]
+def solution(a, b, n):
+    answer = 0
+    while n >= a:
+        new_cola = (n // a) * b
+        answer += new_cola
+        n = (n % a) + new_cola
+    return answer
+# [명예의 전당 (1)]
+import heapq
+def solution(k, score):
+    hq = []
+    ans = []
+    for s in score:
+        heapq.heappush(hq, s)
+        if len(hq) > k:
+            heapq.heappop(hq)
+        ans.append(min(hq))
+    return ans
+# [푸드 파이트 대회]
+def solution(food):
+    answer = ''
+    for i, a in enumerate(food[1:]):
+        answer += str(i+1) * (a // 2)
+    return answer + "0" + answer[::-1]
+# [문자열 내 마음대로 정렬하기]
+def solution(strings, n):
+    return sorted(strings, key=lambda x: (x[n], x))
+# [카드 뭉치]
+def solution(cards1, cards2, goal):
+    idx1 = 0
+    idx2 = 0
+    for word in goal:
+        if idx1 < len(cards1) and cards1[idx1] == word:
+            idx1 += 1
+        elif idx2 < len(cards2) and cards2[idx2] == word:
+            idx2 += 1
+        else:
+            return "No"
+    return "Yes"
+# [추억 점수]
+from collections import defaultdict
+def solution(name, yearning, photo):
+    dic = defaultdict(int)
+    a = []
+    for i, n in enumerate(name):
+        dic[n] = yearning[i]
+    for li in photo:
+        ans = 0
+        for n in li:
+            ans += dic[n]
+        a.append(ans)
+    return a
+# [[1차] 비밀지도]
+def solution(n, arr1, arr2):
+    answer = []
+    for i in range(n):
+        a =str(bin(arr1[i])[2:])
+        b =str(bin(arr2[i])[2:])
+        if len(a) < n:
+            a = "0" * (n-len(a)) + a
+        if len(b) < n:
+            b = "0" * (n-len(b)) + b
+        ans = ""
+        for i in range(n):
+            if a[i] == "1" or b[i] == "1":
+                ans += "#"
+            else:
+                ans += " "
+        answer.append(ans)
+    return answer
+# [폰켓몬]
+def solution(nums):
+    s = list(set(nums))
+    return min(len(s), len(nums)//2)
+# [기사단원의 무기]
+def get_divisor_count(n):
+    count = 0
+    for i in range(1, int(n ** 0.5) + 1):
+        if n % i == 0:
+            if i * i == n:  # 제곱수일 때 (예: 4의 약수 중 2)
+                count += 1
+            else:  # 그 외에는 짝이 되는 약수가 항상 존재함 (예: 12의 약수 2와 6)
+                count += 2
+    return count
+def solution(number, limit, power):
+    answer = 0
+    for i in range(1, number + 1):
+        cnt = get_divisor_count(i)
+        if cnt > limit:
+            answer += power
+        else:
+            answer += cnt
+    return answer
+# [2016년]
+def solution(a, b):
+    month = [31,29,31,30,31,30,31,31,30,31,30,31]
+    day = ['THU', 'FRI', 'SAT', 'SUN', 'MON', 'TUE', 'WED']
+    sum_day = sum(month[:(a-1)])+b
+    return day[sum_day%7]
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
+# [1]
 # [1]
 # [1]
 # [1]
