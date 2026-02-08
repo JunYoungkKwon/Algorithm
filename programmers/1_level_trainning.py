@@ -317,7 +317,273 @@ def solution(a, b):
     day = ['THU', 'FRI', 'SAT', 'SUN', 'MON', 'TUE', 'WED']
     sum_day = sum(month[:(a-1)])+b
     return day[sum_day%7]
-# [1]
+# [덧칠하기]
+def solution(n, m, section):
+    answer = 0
+    painted = 0
+    for s in section:
+        if s > painted:
+            answer += 1
+            painted = s + m - 1
+    return answer
+# [과일 장수]
+def solution(k, m, score):
+    score = sorted(score, reverse = True)
+    ans = 0
+    for i in range(0, len(score), m):
+        if len(score[i:i+m]) == m:
+            ans += (min(score[i:i+m]) * m)
+    return ans
+# [[PCCE 기출문제] 9번 / 지폐 접기]
+def solution(wallet, bill):
+    answer = 0
+    while min(bill) > min(wallet) or max(bill) > max(wallet):
+        if bill[0] > bill[1]:
+            bill[0] //= 2
+        else:
+            bill[1] //= 2
+        answer += 1
+    return answer
+# [소수 만들기]
+from itertools import combinations
+def is_prime(n):
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+def solution(nums):
+    answer = 0
+    for com in combinations(nums, 3):
+        total = sum(com)
+        if is_prime(total):
+            answer += 1
+    return answer
+# [소수 찾기]
+def is_prime(n):
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+def solution(n):
+    answer = 0
+    for i in range(1, n+1):
+        if is_prime(i):
+            answer += 1
+    return answer-1
+# [옹알이 (2)]
+def solution(babbling):
+    answer = 0
+    can = ["aya", "ye", "woo", "ma"]
+    for b in babbling:
+        for i in range(len(can)):
+            if can[i] * 2 in b:
+                break
+            b = b.replace(can[i], str(i))
+        else:
+            if b.isdigit():
+                answer += 1
+    return answer
+# [실패율]
+def solution(N, stages):
+    result = []
+    total_players = len(stages)
+    for i in range(1, N + 1):
+        not_cleared = stages.count(i)
+        if total_players > 0:
+            failure_rate = not_cleared / total_players
+            total_players -= not_cleared
+        else:
+            failure_rate = 0
+        result.append((i, failure_rate))
+    result.sort(key=lambda x: x[1], reverse=True)
+    return [s[0] for s in result]
+# [둘만의 암호]
+def solution(s, skip, index):
+    answer = ''
+    chk = [ord(i) for i in skip]
+    for char in s:
+        current_ord = ord(char)
+        cnt = 0
+        while cnt < index:
+            current_ord += 1
+            if current_ord > ord('z'):
+                current_ord = ord('a')
+            if current_ord in chk:
+                continue
+            cnt += 1
+        answer += chr(current_ord)
+    return answer
+# [[PCCE 기출문제] 9번 / 이웃한 칸]
+def solution(board, h, w):
+    n = len(board)
+    count = 0
+    dh = [-1, 1, 0, 0]
+    dw = [0, 0, -1, 1]
+    target_color = board[h][w]
+    for i in range(4):
+        h_check = h + dh[i]
+        w_check = w + dw[i]
+        if 0 <= h_check < n and 0 <= w_check < n:
+            if board[h_check][w_check] == target_color:
+                count += 1
+    return count
+# [문자열 나누기]
+def solution(s):
+    ans = 0
+    while s:
+        first = s[0]
+        first_cnt = 0
+        another_cnt = 0
+        flag = False
+        for i, ch in enumerate(s):
+            if first == ch:
+                first_cnt += 1
+            else:
+                another_cnt += 1
+            if first_cnt == another_cnt:
+                ans += 1
+                s = s[i+1:]
+                flag = True
+                break
+        if not flag:
+            ans += 1
+            break
+    return ans
+# [대충 만든 자판]
+def solution(keymap, targets):
+    answer = []
+    min_touch = {}
+    for keys in keymap:
+        for i, char in enumerate(keys):
+            touch_count = i + 1
+            if char not in min_touch or touch_count < min_touch[char]:
+                min_touch[char] = touch_count
+    for target in targets:
+        total = 0
+        for char in target:
+            if char in min_touch:
+                total += min_touch[char]
+            else:
+                total = -1
+                break
+        answer.append(total)
+    return answer
+# [다트 게임]
+def solution(dartResult):
+    stk = []
+    num = ""
+    for i in dartResult:
+        if i.isdigit():
+            num += i
+        elif i.isalpha():
+            score = int(num)
+            if i == 'S':
+                score = score ** 1
+            elif i == 'D':
+                score = score ** 2
+            elif i == 'T':
+                score = score ** 3
+            stk.append(score)
+            num = ""
+        else:
+            if i == '*':
+                stk[-1] *= 2
+                if len(stk) >= 2:
+                    stk[-2] *= 2
+            elif i == '#':
+                stk[-1] *= -1
+    return sum(stk)
+# [로또의 최고 순위와 최저 순위]
+def solution(lottos, win_nums):
+    rank = [6, 6, 5, 4, 3, 2, 1]
+    count = 0
+    for num in lottos:
+        if num in win_nums:
+            count += 1
+    zeros = lottos.count(0)
+    return [rank[count + zeros], rank[count]]
+# [햄버거 만들기]
+def solution(ingredient):
+    answer = 0
+    stack = []
+
+    for i in ingredient:
+        stack.append(i)
+        if len(stack) >= 4:
+            if stack[-4:] == [1, 2, 3, 1]:
+                answer += 1
+                for _ in range(4):
+                    stack.pop()
+    return answer
+# [숫자 짝꿍]
+def solution(X, Y):
+    answer = []
+    for i in range(9, -1, -1):
+        char = str(i)
+        count = min(X.count(char), Y.count(char))
+        answer.append(char * count)
+    result = "".join(answer)
+    if result == "":
+        return "-1"
+    if result[0] == "0":
+        return "0"
+    return result
+# [[PCCE 기출문제] 10번 / 데이터 분석]
+def solution(data, ext, val_ext, sort_by):
+    dic = {"code": 0, "date": 1, "maximum": 2, "remain": 3}
+    answer = []
+    for i in data:
+        if i[dic[ext]] <= val_ext:
+            answer.append(i)
+    answer = sorted(answer, key = lambda x:x[dic[sort_by]])
+    return answer
+# [크레인 인형뽑기 게임]
+def find_doll(x, max_l, board):
+    for i in range(max_l):
+        if board[i][x] != 0:
+            a = board[i][x]
+            board[i][x] = 0
+            return a
+    return 0
+def solution(board, moves):
+    stk = []
+    ans = 0
+    for line in moves:
+        a = find_doll(line-1, len(board), board)
+        if a != 0:
+            if stk and stk[-1] == a:
+                stk.pop()
+                ans += 2
+            else:
+                stk.append(a)
+    return ans
+# [성격 유형 검사하기]
+def solution(survey, choices):
+    # 1. 성격 유형별 점수를 저장할 딕셔너리 초기화
+    scores = {'R': 0, 'T': 0, 'C': 0, 'F': 0, 'J': 0, 'M': 0, 'A': 0, 'N': 0}
+
+    # 2. 설문 결과에 따라 점수 합산
+    for s, c in zip(survey, choices):
+        if c < 4:
+            # 1, 2, 3번 선택지 (왼쪽 캐릭터 점수)
+            scores[s[0]] += (4 - c)
+        elif c > 4:
+            # 5, 6, 7번 선택지 (오른쪽 캐릭터 점수)
+            scores[s[1]] += (c - 4)
+
+    # 3. 각 지표별로 결과 결정
+    answer = ''
+    # 지표 쌍을 리스트로 정의
+    indicators = [('R', 'T'), ('C', 'F'), ('J', 'M'), ('A', 'N')]
+
+    for first, second in indicators:
+        # 점수가 더 높은 쪽 선택, 같으면 사전 순(앞의 것) 선택
+        if scores[first] >= scores[second]:
+            answer += first
+        else:
+            answer += second
+
+    return answer
 # [1]
 # [1]
 # [1]
