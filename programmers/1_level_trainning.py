@@ -584,10 +584,101 @@ def solution(survey, choices):
             answer += second
 
     return answer
+# [[카카오 인턴] 키패드 누르기]
+def solution(numbers, hand):
+    answer = ''
+    left_pos = "*"
+    right_pos = "#"
+    dic = {1: (0, 0), 2: (0, 1), 3: (0, 2),
+           4: (1, 0), 5: (1, 1), 6: (1, 2),
+           7: (2, 0), 8: (2, 1), 9: (2, 2),
+           '*': (3, 0), 0: (3, 1), '#': (3, 2)}
+    for num in numbers:
+        if num in [1, 4, 7]:
+            left_pos = num
+            answer += "L"
+        elif num in [3, 6, 9]:
+            right_pos = num
+            answer += "R"
+        else:
+            now_pos = dic[num]
+            l_coord = dic[left_pos]
+            r_coord = dic[right_pos]
+            dist_l = abs(now_pos[0] - l_coord[0]) + abs(now_pos[1] - l_coord[1])
+            dist_r = abs(now_pos[0] - r_coord[0]) + abs(now_pos[1] - r_coord[1])
+            if dist_l < dist_r:
+                left_pos = num
+                answer += "L"
+            elif dist_r < dist_l:
+                right_pos = num
+                answer += "R"
+            else:
+                if hand == "left":
+                    left_pos = num
+                    answer += "L"
+                else:
+                    right_pos = num
+                    answer += "R"
+    return answer
 # [1]
-# [1]
-# [1]
-# [1]
+def solution(new_id):
+    stk = []
+    stk2 = []
+    cnt = 0
+    # 1단계
+    new_id = new_id.lower()
+    # 2단계
+    for ch in new_id:
+        # if ch.isalnum() or ch in "-_.":
+        if not ch in "~!@#$%^&*()=+[{]}:?,<>/":
+            stk.append(ch)
+    new_id = "".join(stk)
+    # 3단계
+    for ch in new_id:
+        if stk2 and stk2[-1] == "." and ch == ".":
+            continue
+        else:
+            stk2.append(ch)
+    # 4단계
+    if stk2 and stk2[0] == ".":
+        stk2.pop(0)
+    if stk2 and stk2[-1] == ".":
+        stk2.pop()
+    new_id = "".join(stk2)
+    # 5단계
+    if not new_id:
+        new_id = "a"
+    # 6단계
+    if len(new_id) > 15:
+        new_id = new_id[:15]
+        if new_id[-1] == ".":
+            new_id = new_id[:-1]
+
+    # 7단계
+    if len(new_id) == 1:
+        new_id = new_id * 3
+    if len(new_id) == 2:
+        new_id += new_id[-1]
+    return new_id
+# [바탕화면 정리]
+def solution(wallpaper):
+    len_y = len(wallpaper)
+    len_x = len(wallpaper[0])
+    min_y = 51
+    min_x = 51
+    max_y = -1
+    max_x = -1
+    for i in range(len_y):
+        for j in range(len_x):
+            if wallpaper[i][j] == "#":
+                min_y = min(min_y, i)
+                min_x = min(min_x, j)
+                max_y = max(max_y, i)
+                max_x = max(max_x, j)
+    answer = [min_y,min_x,max_y+1,max_x+1]
+    return answer
+# [유연근무제]
+
 # [1]
 # [1]
 # [1]
