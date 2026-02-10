@@ -97,13 +97,70 @@ def solution(people, limit):
         right -= 1
         boat += 1
     return boat
-# [1]
-# [1]
-# [1]
-# [1]
-# [1]
-# [1]
-# [1]
+# [귤 고르기]
+from collections import Counter
+def solution(k, tangerine):
+    answer = 0
+    counts = Counter(tangerine)
+    sorted_counts = sorted(counts.values(), reverse=True)
+    for count in sorted_counts:
+        k -= count
+        answer += 1
+        if k <= 0:
+            break
+    return answer
+# [점프와 순간 이동]
+def solution(n):
+    ans = 0
+    while n > 0:
+        if n % 2 != 0:
+            ans += 1
+            n -= 1
+        else:
+            n //= 2
+    return ans
+# [N개의 최소공배수]
+from math import gcd
+def solution(arr):
+    answer = arr[0]
+    for i in range(1, len(arr)):
+        answer = (answer * arr[i]) // gcd(answer, arr[i])
+    return answer
+# [멀리 뛰기]
+def solution(n):
+    if n <= 2:
+        return n
+    dp = [0] * (n + 1)
+    dp[1] = 1
+    dp[2] = 2
+    mod = 1234567
+
+    for i in range(3, n + 1):
+        dp[i] = (dp[i - 1] + dp[i - 2]) % mod
+    return dp[n]
+# [연속 부분 수열 합의 개수]
+def solution(elements):
+    n = len(elements)
+    extended_elements = elements * 2
+    sums = set()
+    for length in range(1, n + 1):
+        for i in range(n):
+            sub_sum = sum(extended_elements[i : i + length])
+            sums.add(sub_sum)
+    return len(sums)
+# [영어 끝말잇기]
+def solution(n, words):
+    answer = []
+    for i,word in enumerate(words):
+        if not answer:
+            answer.append(word)
+        else:
+            if answer[-1][-1] != word[0] or word in answer:
+                return [n, (i+1)//n] if (i+1) % n == 0 else [(i+1) % n, ((i+1)//n)+1]
+            else:
+                answer.append(word)
+    return [0,0]
+# [예상 대진표]
 # [1]
 # [1]
 # [1]
