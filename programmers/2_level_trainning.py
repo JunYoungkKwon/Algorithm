@@ -161,19 +161,212 @@ def solution(n, words):
                 answer.append(word)
     return [0,0]
 # [예상 대진표]
-# [1]
-# [1]
-# [1]
-# [1]
-# [1]
-# [1]
-# [1]
-# [1]
-# [1]
-# [1]
-# [1]
-# [1]
-# [1]
+def solution(n, a, b):
+    answer = 0
+    while a != b:
+        if (a % 2) == 0:
+            a //= 2
+        else:
+            a = (a // 2) + 1
+        if (b % 2) == 0:
+            b //= 2
+        else:
+            b = (b // 2) + 1
+        answer += 1
+    return answer
+# [할인 행사]
+def solution(want, number, discount):
+    answer = 0
+    for i in range(0, len(discount)-9):
+        li = discount[i:i+10]
+        tf = True
+        for i in range(len(number)):
+            if li.count(want[i]) != number[i]:
+                tf = False
+                break
+        if tf:
+            answer += 1
+    return answer
+# [완주하지 못한 선수]
+from collections import Counter
+def solution(participant, completion):
+    diff = Counter(participant) - Counter(completion)
+    for n, v in diff.items():
+        return n
+
+# [폰켓몬]
+from itertools import combinations
+def solution(nums):
+    s = list(set(nums))
+    return min(len(s), len(nums)//2)
+    # for i in combinations(nums, len(nums)//2):
+    #     s.add(list(i))
+    #     print(s)
+    # answer = 0
+    # return answer
+# [전화번호 목록]
+def solution(phone_book):
+    numbers = set(phone_book)
+    for number in phone_book:
+        for i in range(1, len(number)):
+            if number[:i] in numbers:
+                return False
+    return True
+# [의상]
+from collections import defaultdict
+def solution(clothes):
+    dic = defaultdict(list)
+
+    # 종류별로 옷 모으기
+    for name, type_ in clothes:
+        dic[type_].append(name)
+
+    # 모든 조합 계산
+    answer = 1
+    for type_ in dic:
+        answer *= (len(dic[type_]) + 1)  # (그 종류의 옷 개수 + 안입는 선택지)
+
+    return answer - 1  # 모두 안 입는 경우 제거
+
+# [베스트앨범]
+from collections import defaultdict
+def solution(genres, plays):
+    genre_play_sum = defaultdict(int)     # 장르별 총 재생 횟수
+    songs = defaultdict(list)             # 장르별 (재생수, 고유번호)
+
+    # 1. 장르별 총 재생 수 및 노래 리스트 저장
+    for i in range(len(genres)):
+        genre_play_sum[genres[i]] += plays[i]
+        songs[genres[i]].append((plays[i], i))
+
+
+    # 2. 장르 총 재생 횟수로 내림차순 정렬
+    sorted_genres = sorted(genre_play_sum.items(), key=lambda x: -x[1])
+
+
+    answer = []
+    key = lambda x: x[0]
+
+    # 3. 각 장르에서 재생수 기준으로 내림차순, 같으면 고유번호 오름차순
+    for genre, _ in sorted_genres:
+        sorted_songs = sorted(songs[genre], key=lambda x: (-x[0], x[1]))
+        # 상위 2개까지 넣기
+        for play, idx in sorted_songs[:2]:
+            answer.append(idx)
+
+    return answer
+# [같은 숫자는 싫어]
+arr = [1,1,3,3,0,1,1]
+def solution(arr):
+    answer = []
+    for v in arr:
+        if not answer or answer[-1] != v:
+            answer.append(v)
+    return answer
+solution(arr)
+# [기능개발]
+def solution(progresses, speeds):
+    days = []
+    for p, s in zip(progresses, speeds):
+        # 남은 작업일 계산 (100 - p) / s 올림
+        remain = (100 - p + s - 1) // s
+        days.append(remain)
+
+    answer = []
+    current = days[0]
+    count = 1
+
+    for d in days[1:]:
+        if d <= current:
+            count += 1
+        else:
+            answer.append(count)
+            current = d
+            count = 1
+
+    answer.append(count)
+    return answer
+# [올바른 괄호]
+def solution(s):
+    stk = []
+    answer = True
+    for i in s:
+        if i == "(":
+            stk.append(i)
+        else:
+            if stk:
+                stk.pop()
+            else:
+                return False
+    if stk:
+        return False
+    else:
+        return True
+# [프로세스]
+from collections import deque
+
+def solution(priorities, location):
+    deq = deque((p, i) for i, p in enumerate(priorities))
+    ans = []
+
+    while deq:
+        p, l = deq.popleft()
+        # 남아있는 프로세스 중 더 높은 우선순위가 있다면
+        if deq and p < max(x[0] for x in deq):
+            deq.append((p, l))  # 뒤로 보냄
+        else:
+            ans.append(l)
+            if l == location:  # 목표 위치 프로세스면 종료
+                return len(ans)
+# [다리를 지나는 트럭]
+from collections import deque
+
+def solution(bridge_length, weight, truck_weights):
+    time = 0
+    bridge = deque([0] * bridge_length)  # 다리 위 상태 (길이만큼 0으로 초기화)
+    current_weight = 0                   # 현재 다리 위 총 무게
+
+    for truck in truck_weights:
+        while True:
+            time += 1
+            out = bridge.popleft()       # 한 칸 앞으로 이동
+            current_weight -= out
+
+            # 트럭이 올라갈 수 있으면
+            if current_weight + truck <= weight:
+                bridge.append(truck)     # 트럭 올리기
+                current_weight += truck
+                break
+            else:
+                # 못 올라가면 0을 넣고 시간만 흐르게 하기
+                bridge.append(0)
+
+    # 마지막 트럭이 완전히 건너는 시간 추가
+    time += bridge_length
+
+    return time
+# [주식가격]
+def solution(prices):
+    n = len(prices)
+    answer = [0] * n
+    stack = []  # 인덱스를 저장하는 스택
+
+    for i in range(n):
+        # 스택의 top에 있는 인덱스 주가가 현재보다 높으면 가격 하락 발생
+        while stack and prices[stack[-1]] > prices[i]:
+            top = stack.pop()
+            answer[top] = i - top   # 걸린 시간 저장
+
+        stack.append(i)
+
+    # 끝까지 가격이 떨어지지 않은 경우 처리
+    while stack:
+        top = stack.pop()
+        answer[top] = n - 1 - top
+
+    return answer
+
+
 # [1]
 # [1]
 # [1]
