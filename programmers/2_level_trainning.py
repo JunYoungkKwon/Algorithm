@@ -349,26 +349,103 @@ def solution(bridge_length, weight, truck_weights):
 def solution(prices):
     n = len(prices)
     answer = [0] * n
-    stack = []  # 인덱스를 저장하는 스택
+    stack = []  # 가격이 떨어지지 않은 '인덱스'를 담는 통
 
     for i in range(n):
-        # 스택의 top에 있는 인덱스 주가가 현재보다 높으면 가격 하락 발생
-        while stack and prices[stack[-1]] > prices[i]:
+        # 1. 스택이 비어있지 않고, 현재 가격이 스택 맨 위 가격보다 떨어졌다면
+        while stack and prices[i] < prices[stack[-1]]:
             top = stack.pop()
-            answer[top] = i - top   # 걸린 시간 저장
+            # 2. 떨어진 시점(i) - 들어온 시점(top) = 버틴 기간
+            answer[top] = i - top
 
+        # 3. 현재 시점의 인덱스를 스택에 추가
         stack.append(i)
 
-    # 끝까지 가격이 떨어지지 않은 경우 처리
+    # 4. 끝까지 가격이 떨어지지 않은 나머지 친구들 처리
     while stack:
         top = stack.pop()
-        answer[top] = n - 1 - top
+        answer[top] = (n - 1) - top
 
     return answer
+# [더 맵게]
+import heapq
+def solution(scoville, K):
+    heapq.heapify(scoville)
+    answer = 0
 
+    while len(scoville) >= 2:
+        min_num = heapq.heappop(scoville)
 
-# [1]
-# [1]
+        # 제일 작은 값이 이미 K 이상이면 끝
+        if min_num >= K:
+            return answer
+
+        # 두 번째 최소값 꺼냄
+        second_min = heapq.heappop(scoville)
+        new_scoville = min_num + second_min * 2
+        heapq.heappush(scoville, new_scoville)
+        answer += 1
+
+    # 마지막 하나만 남은 경우 처리
+    # 하나 남아 있는데 그 값도 K보다 작으면 실패
+    if scoville and scoville[0] >= K:
+        return answer
+    else:
+        return -1
+# [이중우선순위큐]
+import heapq
+from collections import defaultdict
+
+def solution(operations):
+    min_h = []
+    max_h = []
+    dic = defaultdict(int)
+
+    for s in operations:
+        cmd, num = s.split()
+        num = int(num)
+
+        # 삽입
+        if cmd == "I":
+            heapq.heappush(min_h, num)
+            heapq.heappush(max_h, -num)
+            dic[num] += 1
+
+        # 삭제
+        elif cmd == "D":
+            if num == -1:  # 최소값 삭제
+                while min_h:
+                    x = heapq.heappop(min_h)
+                    if dic[x] > 0:
+                        dic[x] -= 1
+                        break
+            else:          # 최대값 삭제
+                while max_h:
+                    x = -heapq.heappop(max_h)
+                    if dic[x] > 0:
+                        dic[x] -= 1
+                        break
+
+    max_val = None
+    min_val = None
+
+    while max_h:
+        x = -heapq.heappop(max_h)
+        if dic[x] > 0:
+            max_val = x
+            break
+
+    while min_h:
+        x = heapq.heappop(min_h)
+        if dic[x] > 0:
+            min_val = x
+            break
+
+    if max_val is None or min_val is None:
+        return [0, 0]
+
+    return [max_val, min_val]
+
 # [1]
 # [1]
 # [1]
