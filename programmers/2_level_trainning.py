@@ -394,58 +394,49 @@ def solution(scoville, K):
         return -1
 # [이중우선순위큐]
 import heapq
-from collections import defaultdict
+
 
 def solution(operations):
-    min_h = []
-    max_h = []
-    dic = defaultdict(int)
+    min_h = []  # 최소 힙
+    max_h = []  # 최대 힙
+    # 각 숫자가 현재 큐에 존재하는지 확인하는 체크 리스트 (고유 ID 사용)
+    visited = [False] * 1000001
 
-    for s in operations:
-        cmd, num = s.split()
-        num = int(num)
+    for i, op in enumerate(operations):
+        cmd, val = op.split()
+        num = int(val)
 
-        # 삽입
-        if cmd == "I":
-            heapq.heappush(min_h, num)
-            heapq.heappush(max_h, -num)
-            dic[num] += 1
+        if cmd == 'I':
+            # 1. 삽입: 두 힙에 모두 넣고, i번째 데이터가 유효함을 표시
+            heapq.heappush(min_h, (num, i))
+            heapq.heappush(max_h, (-num, i))
+            visited[i] = True
 
-        # 삭제
-        elif cmd == "D":
-            if num == -1:  # 최소값 삭제
-                while min_h:
-                    x = heapq.heappop(min_h)
-                    if dic[x] > 0:
-                        dic[x] -= 1
-                        break
-            else:          # 최대값 삭제
-                while max_h:
-                    x = -heapq.heappop(max_h)
-                    if dic[x] > 0:
-                        dic[x] -= 1
-                        break
+        elif cmd == 'D':
+            if num == 1:  # 최대값 삭제
+                # 2. 이미 삭제된 허수(유령 데이터)들을 힙의 꼭대기에서 제거
+                while max_h and not visited[max_h[0][1]]:
+                    heapq.heappop(max_h)
+                if max_h:
+                    _, idx = heapq.heappop(max_h)
+                    visited[idx] = False  # 해당 데이터 삭제 처리
+            else:  # 최솟값 삭제
+                while min_h and not visited[min_h[0][1]]:
+                    heapq.heappop(min_h)
+                if min_h:
+                    _, idx = heapq.heappop(min_h)
+                    visited[idx] = False
 
-    max_val = None
-    min_val = None
+    # 3. 모든 명령 종료 후, 각 힙의 꼭대기에 있는 유령 데이터 최종 청소
+    while max_h and not visited[max_h[0][1]]:
+        heapq.heappop(max_h)
+    while min_h and not visited[min_h[0][1]]:
+        heapq.heappop(min_h)
 
-    while max_h:
-        x = -heapq.heappop(max_h)
-        if dic[x] > 0:
-            max_val = x
-            break
-
-    while min_h:
-        x = heapq.heappop(min_h)
-        if dic[x] > 0:
-            min_val = x
-            break
-
-    if max_val is None or min_val is None:
+    # 4. 결과 반환
+    if not max_h or not min_h:
         return [0, 0]
-
-    return [max_val, min_val]
-
+    return [-max_h[0][0], min_h[0][0]]
 # [1]
 # [1]
 # [1]
